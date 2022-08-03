@@ -1,8 +1,8 @@
 export const todoList = {
-    state: () => ({
+    state: {
         data: [],
         userList: []
-    }),
+    },
     getters: {
     },
     mutations: {

@@ -1,7 +1,7 @@
 <template>
  <Suspense>
     <template #default>
-    <test-component />
+    <data-fetch />
     </template>
     <template #fallback>
       <p>Loading...</p>
@@ -11,5 +11,5 @@
 <!--  {{todoList}}-->
 <script setup>
 
-import TestComponent from "@/components/TestComponent";
+import DataFetch from "@/components/DataFetch";
 </script>
