@@ -12,7 +12,7 @@ const routes = [
         component: () => import('@/components/PostList')
     },
     {
-        path: '/:userId/:title',
+        path: '/:userId/:id',
         name: 'PostDetail',
         component: () => import('@/components/PostDetail')
     }
