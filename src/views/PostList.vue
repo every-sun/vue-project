@@ -1,12 +1,14 @@
 <template>
   <h1>{{ $route.params.userId }} 님의 게시글 목록</h1>
-  <div id="tab-menu">
-    <button class="menu-item" @click="filterPostList">전체</button>
-    <button class="menu-item" @click="filterPostList">작성중</button>
-    <button class="menu-item" @click="filterPostList">완료</button>
+  <div class="flex mb-[30pxx] gap-0.5">
+    <button @click="filterPostList">전체</button>
+    <button @click="filterPostList">작성중</button>
+    <button @click="filterPostList">완료</button>
   </div>
-  <p>{{ postList }}</p>
-  <list-item v-for="post in postList" :key="post.id" :item="{userId: $route.params.userId, postId: post.id, print: post.title }" component="PostDetail" />
+<!--  <p>{{ postList }}</p>-->
+  <ul>
+    <list-item v-for="post in postList" :key="post.id" :item="{userId: $route.params.userId, postId: post.id, print: post.title }" component="PostDetail" />
+  </ul>
 </template>
 <script setup>
   import {useStore} from "vuex";
@@ -30,22 +32,3 @@
     console.log(postList);
   }
 </script>
-<style scoped>
-  #tab-menu{
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 30px;
-  }
-  .menu-item{
-    all: unset;
-    cursor: pointer;
-    border: 1px solid #5b8cb7;
-    border-radius: 6px;
-    padding: 4px;
-  }
-  .menu-item:active{
-    background: #5b8cb7;
-    color: #fff;
-  }
-</style>

@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body{
+        @apply w-3/4 m-auto my-[40px]
+    }
+    h1 {
+        @apply text-2xl text-blue-600 my-[20px]
+    }
+    button{
+        @apply border border-cyan-700 p-1 rounded-sm
+    }
+    li {
+        @apply mb-1.5
+    }
+}
