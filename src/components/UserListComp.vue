@@ -1,5 +1,5 @@
 <template>
-  <h1>사용자 목록</h1>
+  <h1>사용자 목록 (총 유저: {{userList.length}}명)</h1>
   <list-item v-for="user in userList" :key="user" :item="{userId: user, postId: null, print: user }" component="PostList" />
 </template>
 <script setup>
@@ -9,6 +9,7 @@ import ListItem from "@/components/ListItem";
 
 const store = useStore();
 const fetchData = await fetchTodoList();
+
 store.commit("setData", fetchData);
 store.dispatch('filterUserList', fetchData);
 const userList = store.state.todoList.userList;

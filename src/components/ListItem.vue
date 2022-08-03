@@ -1,6 +1,5 @@
 <template>
   <router-link :to="{name : props.component, params: {userId : props.item.userId, id: props.item.postId}}">{{props.item.print}}</router-link>
-  {{props.item.postId}}
 </template>
 <script setup>
 import {defineProps} from "vue";
