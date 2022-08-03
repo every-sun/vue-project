@@ -4,17 +4,17 @@ const routes = [
     {
         path: '/',
         name: 'Home',
-        component: () => import('@/components/UserList.vue')
+        component: () => import('@/views/UserList.vue')
     },
     {
         path: '/:userId',
         name: 'PostList',
-        component: () => import('@/components/PostList')
+        component: () => import('@/views/PostList')
     },
     {
         path: '/:userId/:id',
         name: 'PostDetail',
-        component: () => import('@/components/PostDetail')
+        component: () => import('@/views/PostDetail')
     }
 ]
 export const router = createRouter({

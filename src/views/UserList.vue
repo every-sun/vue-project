@@ -1,8 +1,6 @@
 <template>
  <Suspense>
-    <template #default>
-    <data-fetch />
-    </template>
+    <user-list-comp />
     <template #fallback>
       <p>Loading...</p>
     </template>
@@ -11,5 +9,5 @@
 <!--  {{todoList}}-->
 <script setup>
 
-import DataFetch from "@/components/DataFetch";
+import UserListComp from "@/components/UserListComp";
 </script>
