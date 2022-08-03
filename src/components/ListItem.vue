@@ -1,11 +1,15 @@
 <template>
-  <router-link :to="{name : 'PostList', params: {userId : props.item}}">{{props.item}}</router-link>
+  <router-link :to="{name : props.component, params: {userId : props.item.userId, id: props.item.postId}}">{{props.item.print}}</router-link>
+  {{props.item.postId}}
 </template>
 <script setup>
 import {defineProps} from "vue";
 const props = defineProps({
   item: {
     type: Object
+  },
+  component:{
+    type: String
   }
 })
 </script>
