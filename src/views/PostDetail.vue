@@ -16,7 +16,6 @@
 
   const postList = store.state.todoList.data;
   const post = postList.filter(v=>v.id===Number(route.params.id))[0];
-  console.log(post)
 </script>
 <style scoped>
   #post-info{
