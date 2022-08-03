@@ -1,9 +1,6 @@
 <template>
-  <div>
   <h1>사용자 목록</h1>
   <list-item v-for="user in userList" :key="user" :item="user" />
-<!--    {{userList}}-->
-  </div>
 </template>
 <script setup>
 import {useStore} from "vuex";
