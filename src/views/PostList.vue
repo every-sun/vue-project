@@ -1,6 +1,6 @@
 <template>
   <h1>{{ $route.params.userId }} 님의 게시글 목록</h1>
-  <div class="flex mb-[30px] justify-around bg-blue-500 rounded-lg overflow-hidden">
+  <div class="flex mb-[30px] justify-around rounded-lg overflow-hidden">
     <button :class="{ 'w-[34%]':true, 'bg-sky-400' : tabMenuStatus==='all'}" @click="onTabMenuClick">전체</button>
     <button :class="{ 'w-[34%]':true, 'bg-sky-400' : tabMenuStatus==='false'}" @click="onTabMenuClick">작성중</button>
     <button :class="{ 'w-[34%]':true, 'bg-sky-400' : tabMenuStatus==='true'}" @click="onTabMenuClick">완료</button>
@@ -14,12 +14,14 @@
   <ul v-else>
     <list-item v-for="post in completedList" :key="post.id" :item="{userId: $route.params.userId, postId: post.id, print: post.title }" component="PostDetail" />
   </ul>
+  <button @click="goToList">사용자 목록</button>
 </template>
 <script setup>
   import {ref} from 'vue';
   import {useStore} from "vuex";
   import { useRoute } from 'vue-router';
   import ListItem from "@/components/ListItem";
+  import {router} from "@/router";
 
   const store = useStore();
   const route = useRoute();
@@ -41,6 +43,10 @@
     }else{
       tabMenuStatus.value = 'true';
     }
+  }
+
+  const goToList =  () => {
+    router.push({name: 'Home'})
   }
 
 </script>

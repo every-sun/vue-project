@@ -10,11 +10,13 @@
     <list-item v-if="currentIndex>0" :item="{userId: $route.params.userId, postId: prevId, print: '<이전>'}" component="PostDetail" />
     <list-item v-if="currentIndex<postList.length-1" :item="{userId: $route.params.userId, postId: nextId, print: '<다음>'}" component="PostDetail" />
   </ul>
+  <button @click="goToList">목록</button>
 </template>
 <script setup>
   import {reactive, ref, watch} from "vue";
   import {useStore} from "vuex";
   import { useRoute } from 'vue-router';
+  import {router} from "@/router";
   import ListItem from "@/components/ListItem";
 
   const store = useStore();
@@ -29,6 +31,10 @@
   const prevId = ref(postList[currentIndex.value-1]?.id);
   const nextId = ref(postList[currentIndex.value+1]?.id);
 
+  const goToList =  () => {
+    router.push({name: 'PostList', params: {userId: route.params.userId}})
+  }
+
   watch(
       ()=>route.params.id,
       (newId)=>{
@@ -39,9 +45,9 @@
   watch(
       ()=>currentIndex.value,
       (newIdx)=>{
-          post.id = postList[newIdx].id;
-          post.title = postList[newIdx].title;
-          post.completed = postList[newIdx].completed;
+          post.id = postList[newIdx]?.id;
+          post.title = postList[newIdx]?.title;
+          post.completed = postList[newIdx]?.completed;
           prevId.value = postList[newIdx-1]?.id;
           nextId.value = postList[newIdx+1]?.id;
       }
