@@ -10,3 +10,9 @@ export const fetchTodoList = async()=>{
     return data;
 }
 
+export const fetchUserList = async()=>{
+    const response = await axiosInstance.get('/users');
+    const data = response.data;
+    return data;
+}
+

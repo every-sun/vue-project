@@ -11,16 +11,8 @@ export const todoList = {
         },
         setUserList(state, value){
             state.userList = value;
-        }
+        },
     },
     actions: {
-        filterUserList(context, payload){
-            // 중복 user id 제외
-            const userIdList = payload.map(v=>{
-                return v.userId
-            })
-            const userSet = new Set(userIdList);
-            context.commit('setUserList', [...userSet]);
-        }
     }
 }

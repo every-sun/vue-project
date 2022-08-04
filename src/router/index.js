@@ -15,7 +15,7 @@ const routes = [
         path: '/:userId/:id',
         name: 'PostDetail',
         component: () => import('@/views/PostDetail')
-    }
+    },
 ]
 export const router = createRouter({
     history: createWebHistory(),
