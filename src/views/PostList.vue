@@ -1,9 +1,9 @@
 <template>
   <h1>{{ $route.params.userId }} 님의 게시글 목록</h1>
-  <div class="flex mb-[30pxx] gap-0.5">
-    <button @click="onTabMenuClick">전체</button>
-    <button @click="onTabMenuClick">작성중</button>
-    <button @click="onTabMenuClick">완료</button>
+  <div class="flex mb-[30px] justify-around bg-blue-500 rounded-lg overflow-hidden">
+    <button class="w-[34%]" @click="onTabMenuClick">전체</button>
+    <button class="w-[34%]" @click="onTabMenuClick">작성중</button>
+    <button class="w-[34%]" @click="onTabMenuClick">완료</button>
   </div>
   <ul v-if="tabMenuStatus==='all'">
     <list-item v-for="post in allList" :key="post.id" :item="{userId: $route.params.userId, postId: post.id, print: post.title }" component="PostDetail" />

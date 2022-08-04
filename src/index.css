@@ -10,7 +10,7 @@
         @apply text-2xl text-blue-600 my-[20px]
     }
     button{
-        @apply border border-cyan-700 p-1 rounded-sm
+        @apply text-white p-2 border hover:bg-sky-400 ease-linear duration-200
     }
     li {
         @apply mb-1.5
