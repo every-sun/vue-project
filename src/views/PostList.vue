@@ -1,16 +1,22 @@
 <template>
   <h1>{{ $route.params.userId }} 님의 게시글 목록</h1>
   <div class="flex mb-[30pxx] gap-0.5">
-    <button @click="filterPostList">전체</button>
-    <button @click="filterPostList">작성중</button>
-    <button @click="filterPostList">완료</button>
+    <button @click="onTabMenuClick">전체</button>
+    <button @click="onTabMenuClick">작성중</button>
+    <button @click="onTabMenuClick">완료</button>
   </div>
-<!--  <p>{{ postList }}</p>-->
-  <ul>
-    <list-item v-for="post in postList" :key="post.id" :item="{userId: $route.params.userId, postId: post.id, print: post.title }" component="PostDetail" />
+  <ul v-if="tabMenuStatus==='all'">
+    <list-item v-for="post in allList" :key="post.id" :item="{userId: $route.params.userId, postId: post.id, print: post.title }" component="PostDetail" />
+  </ul>
+  <ul v-else-if="tabMenuStatus==='false'">
+    <list-item v-for="post in proceedingList" :key="post.id" :item="{userId: $route.params.userId, postId: post.id, print: post.title }" component="PostDetail" />
+  </ul>
+  <ul v-else>
+    <list-item v-for="post in completedList" :key="post.id" :item="{userId: $route.params.userId, postId: post.id, print: post.title }" component="PostDetail" />
   </ul>
 </template>
 <script setup>
+  import {ref} from 'vue';
   import {useStore} from "vuex";
   import { useRoute } from 'vue-router';
   import ListItem from "@/components/ListItem";
@@ -18,17 +24,23 @@
   const store = useStore();
   const route = useRoute();
 
+  let tabMenuStatus = ref('all');
+
   const dataList = store.state.todoList.data;
-  let postList = dataList.filter(v=>v.userId===Number(route.params.userId));
-  const filterPostList = event => {
+  const allList = dataList.filter(v=>v.userId===Number(route.params.userId));
+  const proceedingList =  dataList.filter(v=> v.userId===Number(route.params.userId) && v.completed===false);
+  const completedList = dataList.filter(v=> v.userId===Number(route.params.userId) && v.completed===true);
+
+  const onTabMenuClick = event => {
     const state = event.target.innerText;
     if(state==='전체'){
-      postList = dataList.filter(v=>v.userId===Number(route.params.userId))
+      tabMenuStatus.value = 'all';
     }else if(state==='작성중'){
-      postList = dataList.filter(v=> v.userId===Number(route.params.userId) && v.completed===false);
+      tabMenuStatus.value = 'false';
     }else{
-      postList = dataList.filter(v=> v.userId===Number(route.params.userId) && v.completed===true);
+      tabMenuStatus.value = 'true';
     }
-    console.log(postList);
+
   }
+
 </script>

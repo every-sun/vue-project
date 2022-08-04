@@ -1,10 +1,10 @@
 <template>
   <h1>게시글 자세히</h1>
-  <div class="flex flex-col gap-1">
-    <p class="border border-slate-300">글번호: {{ post.id }}</p>
-    <p class="border border-slate-300">사용자: {{ post.userId }}</p>
-    <p class="border border-slate-300">제목: {{ post.title }} </p>
-    <p class="border border-slate-300">글 상태: {{ post.completed ? '작성중' : '작성완료' }}</p>
+  <div class="flex flex-col gap-1 border border-slate-300 p-2">
+    <p>글번호: {{ post.id }}</p>
+    <p>사용자: {{ post.userId }}</p>
+    <p>제목: {{ post.title }} </p>
+    <p>글 상태: {{ post.completed ? '작성완료' : '작성중' }}</p>
   </div>
 </template>
 <script setup>
