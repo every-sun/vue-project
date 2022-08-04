@@ -11,6 +11,6 @@ const props = defineProps({
   },
   component:{
     type: String
-  }
+  },
 })
 </script>

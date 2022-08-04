@@ -1,11 +1,11 @@
 <template>
  <Suspense>
-    <user-list-comp />
+    <user-list-item-group />
     <template #fallback>
       <p>Loading...</p>
     </template>
   </Suspense>
 </template>
 <script setup>
-import UserListComp from "@/components/UserListComp";
+import UserListItemGroup from "@/components/UserListItemGroup";
 </script>
