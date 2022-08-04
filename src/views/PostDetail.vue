@@ -24,7 +24,7 @@
   const postList = dataList.filter(v=>v.userId===Number(route.params.userId));
 
   const currentIndex = ref(postList.findIndex(post=>post.id===Number(route.params.id)));
-  const value = {...postList[currentIndex.value]}; //현재 데이터 복사
+  const value = {...postList[currentIndex.value]}; //현재 post 데이터 복사
   const post = reactive(value);
   const prevId = ref(postList[currentIndex.value-1]?.id);
   const nextId = ref(postList[currentIndex.value+1]?.id);

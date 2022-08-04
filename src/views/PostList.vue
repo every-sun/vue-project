@@ -27,6 +27,7 @@
   let tabMenuStatus = ref('all');
 
   const dataList = store.state.todoList.data;
+
   const allList = dataList.filter(v=>v.userId===Number(route.params.userId));
   const proceedingList =  dataList.filter(v=> v.userId===Number(route.params.userId) && v.completed===false);
   const completedList = dataList.filter(v=> v.userId===Number(route.params.userId) && v.completed===true);
@@ -40,7 +41,6 @@
     }else{
       tabMenuStatus.value = 'true';
     }
-
   }
 
 </script>
