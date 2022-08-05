@@ -10,6 +10,7 @@
     <SimpleWithIcon v-if="currentIndex>0" :item="{userId: $route.params.userId, postId: prevId, print: `<이전>${post.title}`, completed:null}" component="PostDetail"/>
     <SimpleWithIcon v-if="currentIndex<postList.length-1" :item="{userId: $route.params.userId, postId: nextId, print: `<다음>${post.title}`, completed:null}" component="PostDetail"/>
   </ul>
+  <AddCommentForm />
     <Suspense>
       <CommentListItemGroup  />
       <template #fallback>
@@ -29,6 +30,7 @@
   import {router} from "@/router";
   import SimpleWithIcon from "@/components/SimpleWithIcon";
   import CommentListItemGroup from "@/components/CommentListItemGroup"
+  import AddCommentForm from "@/components/AddCommentForm";
 
   const store = useStore();
   const route = useRoute();
