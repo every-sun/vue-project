@@ -51,7 +51,6 @@ watch(
         const fetchCommentData = await fetchCommentList(newId);
         store.commit("setCommentList", fetchCommentData);
         commentList.value =  store.state.todoList.commentList;
-
       }
     }
 )

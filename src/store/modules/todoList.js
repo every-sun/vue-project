@@ -18,5 +18,16 @@ export const todoList = {
         }
     },
     actions: {
+        addComment(context, payload){
+            console.log(context, payload)
+            const newComment = {
+                postId: payload.postId,
+                id: context.state.commentList.length===0? 1 : context.state.commentList[context.state.commentList-1]?.id+1,
+                name: 'guest',
+                body: payload.body
+            }
+            const allCommentList = context.state.commentList.concat(newComment);
+            context.commit('setCommentList', allCommentList)
+        }
     }
 }
