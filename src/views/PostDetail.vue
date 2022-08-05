@@ -6,18 +6,20 @@
     <p>제목: {{ post.title }} </p>
     <p>글 상태: {{ post.completed ? '작성완료' : '작성중' }}</p>
   </div>
-  <ul class="flex justify-center gap-5 mt-10">
-    <list-item v-if="currentIndex>0" :item="{userId: $route.params.userId, postId: prevId, print: '<이전>'}" component="PostDetail" />
-    <list-item v-if="currentIndex<postList.length-1" :item="{userId: $route.params.userId, postId: nextId, print: '<다음>'}" component="PostDetail" />
+  <div class="flow-root">
+  <ul class="flex justify-center gap-5 mt-10" role="list">
+    <SimpleWithIcon v-if="currentIndex>0" :item="{userId: $route.params.userId, postId: prevId, print: `<이전>${post.title}`, completed:null}" component="PostDetail"/>
+    <SimpleWithIcon v-if="currentIndex<postList.length-1" :item="{userId: $route.params.userId, postId: nextId, print: `<다음>${post.title}`, completed:null}" component="PostDetail"/>
   </ul>
-  <button @click="goToList">목록</button>
+  </div>
+  <button @click="goToList" class="mt-10">목록</button>
 </template>
 <script setup>
   import {reactive, ref, watch} from "vue";
   import {useStore} from "vuex";
   import { useRoute } from 'vue-router';
   import {router} from "@/router";
-  import ListItem from "@/components/ListItem";
+  import SimpleWithIcon from "@/components/SimpleWithIcon";
 
   const store = useStore();
   const route = useRoute();
