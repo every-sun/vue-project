@@ -10,6 +10,16 @@
     <SimpleWithIcon v-if="currentIndex>0" :item="{userId: $route.params.userId, postId: prevId, print: `<이전>${post.title}`, completed:null}" component="PostDetail"/>
     <SimpleWithIcon v-if="currentIndex<postList.length-1" :item="{userId: $route.params.userId, postId: nextId, print: `<다음>${post.title}`, completed:null}" component="PostDetail"/>
   </ul>
+    <Suspense>
+      <CommentListItemGroup  />
+      <template #fallback>
+        <div class="flex items-center justify-center gap-3">
+          <span class="w-6 h-6 bg-blue-100 rounded-full animate-bounce" />
+          <span class="w-4 h-4 bg-blue-300 rounded-full animate-bounce" />
+          <span class="w-5 h-5 bg-blue-400 rounded-full animate-bounce" />
+        </div>
+      </template>
+    </Suspense>
   <button @click="goToList" class="mt-10">목록</button>
 </template>
 <script setup>
@@ -18,6 +28,7 @@
   import { useRoute } from 'vue-router';
   import {router} from "@/router";
   import SimpleWithIcon from "@/components/SimpleWithIcon";
+  import CommentListItemGroup from "@/components/CommentListItemGroup"
 
   const store = useStore();
   const route = useRoute();
@@ -52,4 +63,6 @@
           nextId.value = postList[newIdx+1]?.id;
       }
   )
+
+
 </script>
