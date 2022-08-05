@@ -1,32 +1,26 @@
 <template>
   <h1>{{ $route.params.userId }} 님의 게시글 목록</h1>
-
   <WithTabs :tabItems="tabItems" :currentTab="currentTab" @onTabItemClick="onTabItemClick" />
-
-<!--  <div class="flex mb-[30px] justify-around rounded-lg overflow-hidden">-->
-<!--    <button :class="{ 'w-[34%]':true, 'bg-sky-400' : tabMenuStatus==='all'}" @click="onTabMenuClick">전체</button>-->
-<!--    <button :class="{ 'w-[34%]':true, 'bg-sky-400' : tabMenuStatus==='false'}" @click="onTabMenuClick">작성중</button>-->
-<!--    <button :class="{ 'w-[34%]':true, 'bg-sky-400' : tabMenuStatus==='true'}" @click="onTabMenuClick">완료</button>-->
-<!--  </div>-->
-  <ul v-if="currentTab==='all'">
-    <list-item v-for="post in allList" :key="post.id" :item="{userId: $route.params.userId, postId: post.id, print: post.title }" component="PostDetail" />
+  <div class="flow-root">
+  <ul v-if="currentTab==='all'" role="list">
+    <SimpleWithIcon v-for="post in allList" :key="post.id" :item="{userId: $route.params.userId, postId: post.id, print: post.title, completed: post.completed?'작성완료':'작성중' }" component="PostDetail"/>
   </ul>
-  <ul v-else-if="currentTab==='false'">
-    <list-item v-for="post in proceedingList" :key="post.id" :item="{userId: $route.params.userId, postId: post.id, print: post.title }" component="PostDetail" />
+  <ul v-else-if="currentTab==='false'" role="list">
+    <SimpleWithIcon v-for="post in proceedingList" :key="post.id" :item="{userId: $route.params.userId, postId: post.id, print: post.title, completed: post.completed?'작성완료':'작성중' }" component="PostDetail"/>
   </ul>
-  <ul v-else>
-    <list-item v-for="post in completedList" :key="post.id" :item="{userId: $route.params.userId, postId: post.id, print: post.title }" component="PostDetail" />
+  <ul v-else role="list">
+    <SimpleWithIcon v-for="post in completedList" :key="post.id" :item="{userId: $route.params.userId, postId: post.id, print: post.title, completed: post.completed?'작성완료':'작성중' }" component="PostDetail"/>
   </ul>
-  <button @click="goToList">사용자 목록</button>
+  </div>
+  <button @click="goToList" class="mt-10">사용자 목록</button>
 </template>
 <script setup>
   import {ref} from 'vue';
   import {useStore} from "vuex";
   import { useRoute } from 'vue-router';
-  import ListItem from "@/components/ListItem";
   import {router} from "@/router";
   import WithTabs from "@/components/WithTabs";
-
+  import SimpleWithIcon from "@/components/SimpleWithIcon";
   const store = useStore();
   const route = useRoute();
 

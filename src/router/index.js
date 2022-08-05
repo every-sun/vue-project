@@ -16,6 +16,11 @@ const routes = [
         name: 'PostDetail',
         component: () => import('@/views/PostDetail')
     },
+    {
+        path: '/test',
+        name: 'SimpleWithIcon',
+        component: () => import('@/components/SimpleWithIcon')
+    }
 ]
 export const router = createRouter({
     history: createWebHistory(),
