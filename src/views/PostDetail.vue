@@ -66,9 +66,9 @@
       }
   )
 
-
   const onSubmit = (message) =>{
-    store.dispatch('addComment', {postId: route.params.id, body: message})
+    store.dispatch('addComment', {postId: route.params.id, body: message});
+    router.go(0);
   }
 
 
