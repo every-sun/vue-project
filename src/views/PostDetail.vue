@@ -1,17 +1,15 @@
 <template>
-  <h1>{{ post.title }}</h1>
-  <div class="flex flex-col gap-1 border border-slate-300 p-2">
-    <p>글번호: {{ post.id }}</p>
-    <p>작성자: {{ post.userId }}</p>
-    <p>제목: {{ post.title }} </p>
-    <p>글 상태: {{ post.completed ? '작성완료' : '작성중' }}</p>
+  <h1>게시글 디테일</h1>
+  <div class="pb-5 border-b border-gray-200">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">{{ post.title }}</h3>
+    <p class="mt-2 max-w-4xl text-sm text-gray-500">글번호: {{ post.id }}</p>
+    <p class="mt-2 max-w-4xl text-sm text-gray-500">작성자: {{ post.userId }}</p>
+    <p class="mt-2 max-w-4xl text-sm text-gray-500">글 상태: {{ post.completed ? '작성완료' : '작성중' }}</p>
   </div>
-  <div class="flow-root">
   <ul class="flex justify-center gap-5 mt-10" role="list">
     <SimpleWithIcon v-if="currentIndex>0" :item="{userId: $route.params.userId, postId: prevId, print: `<이전>${post.title}`, completed:null}" component="PostDetail"/>
     <SimpleWithIcon v-if="currentIndex<postList.length-1" :item="{userId: $route.params.userId, postId: nextId, print: `<다음>${post.title}`, completed:null}" component="PostDetail"/>
   </ul>
-  </div>
   <button @click="goToList" class="mt-10">목록</button>
 </template>
 <script setup>
