@@ -36,20 +36,25 @@ const route = useRoute();
 
 let commentList = reactive({value: []});
 
-const fetchCommentData = await fetchCommentList(route.params.id)
-store.commit("setCommentList", fetchCommentData);
+if(store.state.todoList.commentList.length===0 || store.state.todoList.commentList[0].postId!==Number(route.params.id)){
+  const fetchCommentData = await fetchCommentList(route.params.id);
+  store.commit("setCommentList", fetchCommentData);
+}
 commentList.value = store.state.todoList.commentList;
+
 
 
 watch(
     ()=>route.params.id,
     async (newId)=>{
-      const fetchCommentData = await fetchCommentList(newId);
-      store.commit("setCommentList", fetchCommentData);
-      commentList.value = fetchCommentData;
+      if(newId){
+        const fetchCommentData = await fetchCommentList(newId);
+        store.commit("setCommentList", fetchCommentData);
+        commentList.value =  store.state.todoList.commentList;
+
+      }
     }
 )
-
 
 
 </script>

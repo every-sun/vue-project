@@ -35,7 +35,6 @@
 
   const onTabItemClick = item => {
     currentTab.value = item;
-    console.log(item, currentTab.value);
   }
 
   const goToList =  () => {
