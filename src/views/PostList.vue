@@ -16,24 +16,22 @@
 </template>
 <script setup>
   import {ref} from 'vue';
-  import {useStore} from "vuex";
   import { useRoute } from 'vue-router';
   import {router} from "@/router";
   import WithTabs from "@/components/WithTabs";
   import SimpleWithIcon from "@/components/SimpleWithIcon";
-  const store = useStore();
+  import Post from "@/models/Post"
+  import User from "@/models/User"
+
   const route = useRoute();
 
-  const userName = store.state.todoList.userList.filter(v=>v.id===Number(route.params.userId))[0].name;
-
+  const userName = User.find(Number(route.params.userId)).name;
   const tabItems = [{value: 'all', name: '전체'}, {value: 'false', name: '작성중'}, {value:'true', name:'작성완료'} ];
   const currentTab = ref('all');
 
-  const dataList = store.state.todoList.data;
-
-  const allList = dataList.filter(v=>v.userId===Number(route.params.userId));
-  const proceedingList =  dataList.filter(v=> v.userId===Number(route.params.userId) && v.completed===false);
-  const completedList = dataList.filter(v=> v.userId===Number(route.params.userId) && v.completed===true);
+  const allList = Post.query().where((post)=>{return post.userId===Number(route.params.userId)}).get();
+  const proceedingList = Post.query().where((post)=>{return post.userId===Number(route.params.userId) && post.completed===false}).get();
+  const completedList = Post.query().where((post)=>{return  post.userId===Number(route.params.userId) && post.completed===true}).get();
 
   const onTabItemClick = item => {
     currentTab.value = item;

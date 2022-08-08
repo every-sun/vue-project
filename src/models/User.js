@@ -4,7 +4,7 @@ export default class User extends Model{
     static entity = 'users'
     static fields(){
         return {
-            id: this.uid(),
+            id: this.number(0),
             name: this.string(''),
             username: this.string(''),
             email: this.string(''),

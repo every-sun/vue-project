@@ -5,18 +5,26 @@
   </div>
 </template>
 <script setup>
-  import {useStore} from "vuex";
   import {fetchTodoList, fetchUserList} from "@/api";
   import HorizontalLinkCard from "@/components/HorizontalLinkCard";
+  import User from "@/models/User";
+  import Post from "@/models/Post";
 
-  const store = useStore();
   const fetchData = await fetchTodoList();
-
   const fetchUserData = await fetchUserList();
 
-  store.commit("setData", fetchData);
-  store.commit("setUserList", fetchUserData);
+  for(let i=0; i<fetchUserData.length; i++){
+    User.insert({
+      data: fetchUserData[i]
+    })
+  }
 
-  const userList = store.state.todoList.userList;
+  for(let i=0; i<fetchData.length; i++){
+    Post.insert({
+      data: fetchData[i]
+    })
+  }
+
+  const userList = User.all();
 </script>
 

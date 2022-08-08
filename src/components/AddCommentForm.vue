@@ -28,15 +28,15 @@
 <script setup>
 import {ref} from "vue";
 import {router} from "@/router";
-import {useStore} from "vuex";
-import {useRoute} from "vue-router";
+// import {useStore} from "vuex";
+// import {useRoute} from "vue-router";
 
-const store = useStore();
-const route = useRoute();
+// const store = useStore();
+// const route = useRoute();
 let message = ref("");
 
 const onSubmit = () =>{
-  store.dispatch('addComment', {postId: route.params.id, body: message});
+  // store.dispatch('addComment', {postId: route.params.id, body: message});
   router.go(0);
 }
 

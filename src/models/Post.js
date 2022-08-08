@@ -6,7 +6,7 @@ export default class Post extends Model {
     static fields(){
         return {
             userId: this.attr(null),
-            id: this.uid(),
+            id: this.number(0),
             title: this.string(''),
             completed: this.boolean(false),
             comments: this.hasMany(Comment, 'postId')

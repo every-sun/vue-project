@@ -26,31 +26,38 @@
 </template>
 
 <script setup>
+
 import {reactive, watch} from "vue";
-import {useStore} from "vuex";
 import { useRoute } from 'vue-router';
 import {fetchCommentList} from "@/api";
+import Post from "@/models/Post";
+import Comment from "@/models/Comment";
 
-const store = useStore();
 const route = useRoute();
+const commentList = reactive({value: []})
 
-let commentList = reactive({value: []});
-
-if(store.state.todoList.commentList.length===0 || store.state.todoList.commentList[0].postId!==Number(route.params.id)){
+if(Comment.all().length===0 || Comment.all()[0].postId!==Number(route.params.id)){
   const fetchCommentData = await fetchCommentList(route.params.id);
-  store.commit("setCommentList", fetchCommentData);
+  for(let i=0; i<fetchCommentData.length; i++){
+    await Comment.insert({
+      data: fetchCommentData[i]
+    })
+  }
 }
-commentList.value = store.state.todoList.commentList;
-
-
+commentList.value = Post.query().where('id', Number(route.params.id)).with('comments').first().comments;
 
 watch(
     ()=>route.params.id,
     async (newId)=>{
       if(newId){
-        const fetchCommentData = await fetchCommentList(newId);
-        store.commit("setCommentList", fetchCommentData);
-        commentList.value =  store.state.todoList.commentList;
+        await Comment.deleteAll();
+        const fetchCommentData = await fetchCommentList(route.params.id);
+        for(let i=0; i<fetchCommentData.length; i++){
+          await Comment.insert({
+            data: fetchCommentData[i]
+          })
+        }
+        commentList.value = Post.query().where('id', Number(route.params.id)).with('comments').first().comments;
       }
     }
 )

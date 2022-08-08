@@ -11,47 +11,46 @@
     <SimpleWithIcon v-if="currentIndex<postList.length-1" :item="{userId: $route.params.userId, postId: nextId, print: `<다음>${post.title}`, type: 'right', completed:null}" component="PostDetail"/>
   </ul>
   <AddCommentForm />
-    <Suspense>
-      <CommentListItemGroup />
-      <template #fallback>
-        <div class="flex items-center justify-center gap-3">
-          <span class="w-6 h-6 bg-blue-100 rounded-full animate-bounce" />
-          <span class="w-4 h-4 bg-blue-300 rounded-full animate-bounce" />
-          <span class="w-5 h-5 bg-blue-400 rounded-full animate-bounce" />
-        </div>
-      </template>
-    </Suspense>
+  <Suspense>
+    <CommentListItemGroup />
+    <template #fallback>
+      <div class="flex items-center justify-center gap-3">
+        <span class="w-6 h-6 bg-blue-100 rounded-full animate-bounce" />
+        <span class="w-4 h-4 bg-blue-300 rounded-full animate-bounce" />
+        <span class="w-5 h-5 bg-blue-400 rounded-full animate-bounce" />
+      </div>
+    </template>
+  </Suspense>
   <button @click="goToList" class="mt-10">목록</button>
 </template>
 <script setup>
   import {reactive, ref, watch} from "vue";
-  import {useStore} from "vuex";
   import { useRoute } from 'vue-router';
   import {router} from "@/router";
   import SimpleWithIcon from "@/components/SimpleWithIcon";
   import CommentListItemGroup from "@/components/CommentListItemGroup"
   import AddCommentForm from "@/components/AddCommentForm";
+  import Post from "@/models/Post";
 
-  const store = useStore();
   const route = useRoute();
 
-  const dataList = store.state.todoList.data;
-  const postList = dataList.filter(v=>v.userId===Number(route.params.userId));
-
+  const postList = Post.query().where(post=>{return post.userId===Number(route.params.userId)}).get();
   const currentIndex = ref(postList.findIndex(post=>post.id===Number(route.params.id)));
   const value = {...postList[currentIndex.value]}; //현재 post 데이터 복사
   const post = reactive(value);
   const prevId = ref(postList[currentIndex.value-1]?.id);
   const nextId = ref(postList[currentIndex.value+1]?.id);
 
-  const goToList =  () => {
+  const goToList =  () => { // 목록으로
     router.push({name: 'PostList', params: {userId: route.params.userId}})
   }
 
   watch(
       ()=>route.params.id,
-      (newId)=>{
-        currentIndex.value = postList.findIndex(post=>post.id===Number(newId));
+      async (newId)=>{
+        if(newId){
+          currentIndex.value = postList.findIndex(post=>post.id===Number(newId));
+        }
       }
   )
 
@@ -65,7 +64,5 @@
           nextId.value = postList[newIdx+1]?.id;
       }
   )
-
-
 
 </script>

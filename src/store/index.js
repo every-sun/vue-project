@@ -1,6 +1,4 @@
 import {createStore} from 'vuex';
-import {todoList} from "@/store/modules/todoList";
-import createPersistedState from "vuex-persistedstate";
 import VuexORM from "@vuex-orm/core"
 import Post from "@/models/Post";
 import User from "@/models/User";
@@ -13,7 +11,6 @@ database.register(Comment);
 
 export default createStore({
     modules: {
-        todoList
     },
-    plugins: [createPersistedState(), VuexORM.install(database)]
+    plugins: [VuexORM.install(database)]
 })
