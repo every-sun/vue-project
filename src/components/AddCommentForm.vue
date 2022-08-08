@@ -16,8 +16,8 @@
         </div>
         <div class="absolute bottom-0 inset-x-0 pl-3 pr-2 py-2 flex justify-between">
           <div class="flex-shrink-0">
-            <button type="button"
-                    @click="$emit('onSubmit', message)"
+            <button type="submit"
+                    @click="onSubmit"
                     class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Post</button>
           </div>
         </div>
@@ -27,8 +27,18 @@
 </template>
 <script setup>
 import {ref} from "vue";
+import {router} from "@/router";
+import {useStore} from "vuex";
+import {useRoute} from "vue-router";
 
+const store = useStore();
+const route = useRoute();
 let message = ref("");
+
+const onSubmit = () =>{
+  store.dispatch('addComment', {postId: route.params.id, body: message});
+  router.go(0);
+}
 
 
 </script>

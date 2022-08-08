@@ -10,7 +10,7 @@
     <SimpleWithIcon v-if="currentIndex>0" :item="{userId: $route.params.userId, postId: prevId, print: `<이전>${post.title}`, completed:null}" component="PostDetail"/>
     <SimpleWithIcon v-if="currentIndex<postList.length-1" :item="{userId: $route.params.userId, postId: nextId, print: `<다음>${post.title}`, completed:null}" component="PostDetail"/>
   </ul>
-  <AddCommentForm @onSubmit="onSubmit" />
+  <AddCommentForm />
     <Suspense>
       <CommentListItemGroup />
       <template #fallback>
@@ -65,11 +65,6 @@
           nextId.value = postList[newIdx+1]?.id;
       }
   )
-
-  const onSubmit = (message) =>{
-    store.dispatch('addComment', {postId: route.params.id, body: message});
-    router.go(0);
-  }
 
 
 
