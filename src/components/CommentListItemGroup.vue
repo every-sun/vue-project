@@ -19,6 +19,12 @@
               <p class="text-sm text-gray-500 truncate">
                 {{  comment.body }}
               </p>
+              <button type="button"
+                      class="inline-flex items-center border border-transparent text-[12px] rounded-md shadow-sm mx-0.5 text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">수정</button>
+              <button type="button"
+                      @click="deleteComment(comment.id)"
+                      class="inline-flex items-center border border-transparent text-[12px] font-medium rounded-md mx-0.5 shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">삭제</button>
+
             </div>
           </div>
         </li>
@@ -67,7 +73,7 @@ const addComment = (message) => {
   Comment.insert({
     data: {
       postId: Number(route.params.id),
-      id: Comment.query().last().id+1,
+      id: Comment.query().last()?.id+1,
       name: '게스트',
       email: 'guest@amuz.co.kr',
       body: message,
@@ -76,6 +82,10 @@ const addComment = (message) => {
   commentList.value = Post.query().where('id', Number(route.params.id)).with('comments').first()?.comments;
 }
 
+const deleteComment = (id) => {
+  Comment.delete(id);
+  commentList.value = Post.query().where('id', Number(route.params.id)).with('comments').first()?.comments;
+}
 
 
 </script>
