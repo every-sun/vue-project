@@ -52,7 +52,8 @@ const commentList = reactive({value: []})
 const message = ref('');
 const targetId = ref(0);
 
-if(Comment.all().length===0 || Comment.all()[0].postId!==Number(route.params.id)){
+
+if(Comment.all().length===0 || Comment.query().where('postId',  Number(route.params.id)).get().length===0){
   const fetchCommentData = await fetchCommentList(route.params.id);
   for(let i=0; i<fetchCommentData.length; i++){
     await Comment.insert({
@@ -62,16 +63,18 @@ if(Comment.all().length===0 || Comment.all()[0].postId!==Number(route.params.id)
 }
 commentList.value = Post.query().where('id', Number(route.params.id)).with('comments').first()?.comments;
 
+
 watch(
     ()=>route.params.id,
     async (newId)=>{
       if(newId){
-        await Comment.deleteAll();
-        const fetchCommentData = await fetchCommentList(route.params.id);
-        for(let i=0; i<fetchCommentData.length; i++){
-          await Comment.insert({
-            data: fetchCommentData[i]
-          })
+        if(Comment.query().where('postId',  Number(route.params.id)).get().length===0){
+          const fetchCommentData = await fetchCommentList(route.params.id);
+          for(let i=0; i<fetchCommentData.length; i++){
+            await Comment.insert({
+              data: fetchCommentData[i]
+            })
+          }
         }
         commentList.value = Post.query().where('id', Number(route.params.id)).with('comments').first()?.comments;
       }
