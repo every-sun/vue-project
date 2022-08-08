@@ -1,7 +1,7 @@
 <template>
   <h1>{{ userName }} 님의 게시글 목록</h1>
   <WithTabs :tabItems="tabItems" :currentTab="currentTab" @onTabItemClick="onTabItemClick" />
-  <div class="flow-root">
+  <div class="flow-root mt-10">
   <ul v-if="currentTab==='all'" role="list">
     <SimpleWithIcon v-for="post in allList" :key="post.id" :item="{userId: $route.params.userId, postId: post.id, print: post.title, completed: post.completed?'작성완료':'작성중' }" component="PostDetail"/>
   </ul>
