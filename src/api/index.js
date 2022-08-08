@@ -19,7 +19,6 @@ export const fetchUserList = async()=>{
 export const fetchCommentList = async(postId)=>{
     const response = await axiosInstance.get('/comments', {params: {postId}});
     const data = response.data;
-    console.log(data);
     return data;
 }
 

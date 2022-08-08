@@ -19,13 +19,11 @@
               <p class="text-sm text-gray-500 truncate">
                 {{  comment.body }}
               </p>
-              <div class="mt-4">
+              <div class="mt-4" v-if="comment.id!==targetId">
               <button type="button"
-                      v-if="comment.id!==targetId"
                       @click="editComment(comment)"
                       class="inline-flex items-center border border-transparent text-[12px] rounded-md shadow-sm mx-0.5 text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">수정</button>
               <button type="button"
-                      v-if="comment.id!==targetId"
                       @click="deleteComment(comment.id)"
                       class="inline-flex items-center border border-transparent text-[12px] font-medium rounded-md mx-0.5 shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">삭제</button>
               </div>
@@ -104,7 +102,6 @@ const editComment = (target) => {
 }
 
 const updateComplete = (target) => {
-  console.log(target);
   Comment.update({
     where: target.id,
     data: {
