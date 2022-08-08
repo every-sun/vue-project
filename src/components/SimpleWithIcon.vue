@@ -7,7 +7,7 @@
               <span :class="['bg-blue-500', 'h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white']">
                 <component v-if="props.item.type==='left'" :is="ArrowCircleLeftIcon" class="h-5 w-5 text-white" aria-hidden="true" />
                 <component v-if="props.item.type==='right'" :is="ArrowCircleRightIcon" class="h-5 w-5 text-white" aria-hidden="true" />
-                <component v-if="props.item.type==='list'" :is="ThumbUpIcon" class="h-5 w-5 text-white" aria-hidden="true" />
+                <component v-if="props.item.type==='list'" :is="FireIcon" class="h-5 w-5 text-white" aria-hidden="true" />
               </span>
             </div>
             <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { ArrowCircleRightIcon, ArrowCircleLeftIcon, ThumbUpIcon } from '@heroicons/vue/solid'
+import { ArrowCircleRightIcon, ArrowCircleLeftIcon, FireIcon } from '@heroicons/vue/solid'
 import {defineProps} from "vue";
 const props = defineProps({
   item: {
