@@ -7,8 +7,8 @@
     <p class="mt-2 max-w-4xl text-sm text-gray-500">글 상태: {{ post.completed ? '작성완료' : '작성중' }}</p>
   </div>
   <ul class="flex justify-center gap-5 mt-10" role="list">
-    <SimpleWithIcon v-if="currentIndex>0" :item="{userId: $route.params.userId, postId: prevId, print: `<이전>${post.title}`, completed:null}" component="PostDetail"/>
-    <SimpleWithIcon v-if="currentIndex<postList.length-1" :item="{userId: $route.params.userId, postId: nextId, print: `<다음>${post.title}`, completed:null}" component="PostDetail"/>
+    <SimpleWithIcon v-if="currentIndex>0" :item="{userId: $route.params.userId, postId: prevId, print: `<이전>${post.title}`, type: 'left', completed:null}" component="PostDetail"/>
+    <SimpleWithIcon v-if="currentIndex<postList.length-1" :item="{userId: $route.params.userId, postId: nextId, print: `<다음>${post.title}`, type: 'right', completed:null}" component="PostDetail"/>
   </ul>
   <AddCommentForm />
     <Suspense>
