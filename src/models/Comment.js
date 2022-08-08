@@ -6,7 +6,7 @@ export default class Comment extends Model {
     static fields(){
         return {
             postId: this.attr(null),
-            id: this.number(0),
+            id: this.uid(),
             name: this.string(''),
             email: this.string(''),
             body: this.string(''),

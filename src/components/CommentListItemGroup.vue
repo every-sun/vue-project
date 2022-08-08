@@ -85,13 +85,13 @@ const addComment = (message) => {
   Comment.insert({
     data: {
       postId: Number(route.params.id),
-      id: Comment.query().last()?.id+1,
       name: '게스트',
       email: 'guest@amuz.co.kr',
       body: message,
     }
   })
   commentList.value = Post.query().where('id', Number(route.params.id)).with('comments').first()?.comments;
+  console.log(Comment.all())
 }
 
 const deleteComment = (id) => {
