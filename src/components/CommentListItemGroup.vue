@@ -52,14 +52,17 @@ const commentList = reactive({value: []})
 const message = ref('');
 const targetId = ref(0);
 
-
-if(Comment.all().length===0 || Comment.query().where('postId',  Number(route.params.id)).get().length===0){
+const setCommentList = async () => {
   const fetchCommentData = await fetchCommentList(route.params.id);
   for(let i=0; i<fetchCommentData.length; i++){
     await Comment.insert({
       data: fetchCommentData[i]
     })
   }
+}
+
+if(Comment.all().length===0 || Comment.query().where('postId',  Number(route.params.id)).get().length===0){
+  setCommentList();
 }
 commentList.value = Post.query().where('id', Number(route.params.id)).with('comments').first()?.comments;
 
@@ -69,12 +72,7 @@ watch(
     async (newId)=>{
       if(newId){
         if(Comment.query().where('postId',  Number(route.params.id)).get().length===0){
-          const fetchCommentData = await fetchCommentList(route.params.id);
-          for(let i=0; i<fetchCommentData.length; i++){
-            await Comment.insert({
-              data: fetchCommentData[i]
-            })
-          }
+          await setCommentList();
         }
         commentList.value = Post.query().where('id', Number(route.params.id)).with('comments').first()?.comments;
       }
