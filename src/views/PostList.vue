@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ $route.params.userId }} 님의 게시글 목록</h1>
+  <h1>{{ userName }} 님의 게시글 목록</h1>
   <WithTabs :tabItems="tabItems" :currentTab="currentTab" @onTabItemClick="onTabItemClick" />
   <div class="flow-root">
   <ul v-if="currentTab==='all'" role="list">
@@ -23,6 +23,8 @@
   import SimpleWithIcon from "@/components/SimpleWithIcon";
   const store = useStore();
   const route = useRoute();
+
+  const userName = store.state.todoList.userList.filter(v=>v.id===Number(route.params.userId))[0].name;
 
   const tabItems = [{value: 'all', name: '전체'}, {value: 'false', name: '작성중'}, {value:'true', name:'작성완료'} ];
   const currentTab = ref('all');
