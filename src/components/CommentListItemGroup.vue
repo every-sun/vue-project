@@ -1,7 +1,8 @@
 <template>
+  <AddCommentForm @addComment="addComment"/>
   <div class="flow-root mt-6">
-    <p v-if="commentList.value.length===0">댓글이 없음</p>
-    <p class="mb-10 ">총 댓글 수: {{ commentList.value.length }}</p>
+    <p v-if="commentList.value?.length===0">댓글이 없음</p>
+    <p class="mb-10 ">총 댓글 수: {{ commentList.value?.length }}</p>
     <ul role="list" class="-my-5 divide-y divide-gray-200">
         <li v-for="comment in commentList.value" :key="comment.id" class="py-4">
           <div class="flex items-center space-x-4">
@@ -26,12 +27,12 @@
 </template>
 
 <script setup>
-
 import {reactive, watch} from "vue";
 import { useRoute } from 'vue-router';
 import {fetchCommentList} from "@/api";
 import Post from "@/models/Post";
 import Comment from "@/models/Comment";
+import AddCommentForm from "@/components/AddCommentForm";
 
 const route = useRoute();
 const commentList = reactive({value: []})
@@ -44,7 +45,7 @@ if(Comment.all().length===0 || Comment.all()[0].postId!==Number(route.params.id)
     })
   }
 }
-commentList.value = Post.query().where('id', Number(route.params.id)).with('comments').first().comments;
+commentList.value = Post.query().where('id', Number(route.params.id)).with('comments').first()?.comments;
 
 watch(
     ()=>route.params.id,
@@ -57,10 +58,24 @@ watch(
             data: fetchCommentData[i]
           })
         }
-        commentList.value = Post.query().where('id', Number(route.params.id)).with('comments').first().comments;
+        commentList.value = Post.query().where('id', Number(route.params.id)).with('comments').first()?.comments;
       }
     }
 )
+
+const addComment = (message) => {
+  Comment.insert({
+    data: {
+      postId: Number(route.params.id),
+      id: Comment.query().last().id+1,
+      name: '게스트',
+      email: 'guest@amuz.co.kr',
+      body: message,
+    }
+  })
+  commentList.value = Post.query().where('id', Number(route.params.id)).with('comments').first()?.comments;
+}
+
 
 
 </script>

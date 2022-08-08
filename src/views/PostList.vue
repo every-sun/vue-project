@@ -25,7 +25,7 @@
 
   const route = useRoute();
 
-  const userName = User.find(Number(route.params.userId)).name;
+  const userName = User.find(Number(route.params.userId))?.name;
   const tabItems = [{value: 'all', name: '전체'}, {value: 'false', name: '작성중'}, {value:'true', name:'작성완료'} ];
   const currentTab = ref('all');
 
